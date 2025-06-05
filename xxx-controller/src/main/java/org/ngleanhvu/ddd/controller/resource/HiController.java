@@ -17,4 +17,9 @@ public class HiController {
     public String hi() {
         return eventApplicationService.sayHi("Vu"); 
     }
+
+    @GetMapping("/hi/v1")
+    public String hiv1() {
+        return eventApplicationService.sayHi("Vu");
+    }
 }
