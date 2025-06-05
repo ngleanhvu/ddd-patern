@@ -3,3 +3,44 @@ server:
   tomcat:
     threads:
       max: 10
+
+spring:
+  application:
+    name: xxx-start
+
+resilience4j.circuitbreaker:
+  instances:
+    checkRandom:
+      slidingWindowSize: 10
+      permittedNumberOfCallsInHalfOpenState: 3
+      waitDurationInOpenState: 5s
+      failureRateThreshold: 50
+      minimum-number-of-calls: 5
+      eventConsumerBufferSize: 10
+      registerHealthIndicator: true
+
+resilience4j.ratelimiter:
+  instances:
+    backendA:
+      limitForPeriod: 2
+      limitRefreshPeriod: 10s
+      timeoutDuration: 0
+      registerHealthIndicator: true
+      eventConsumerBufferSize: 100
+    backendB:
+      limitForPeriod: 5
+      limitRefreshPeriod: 10s
+      timeoutDuration: 3s
+
+management:
+  health:
+    circuitbreakers:
+      enabled: true
+  endpoints:
+    web:
+      exposure:
+        include:
+          - '*'
+  endpoint:
+    health:
+      show-details: always
